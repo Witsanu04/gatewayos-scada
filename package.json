@@ -1,0 +1,43 @@
+{
+  "name": "gatewayos-industrial-scada",
+  "version": "1.0.0",
+  "description": "GatewayOS — Industrial SCADA & Custom HMI Designer",
+  "main": "electron/main.js",
+  "author": "GatewayOS",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "build": "vite build",
+    "dist": "npm run build && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "better-sqlite3": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "serialport": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "concurrently": "latest",
+    "cross-env": "latest",
+    "electron": "latest",
+    "electron-builder": "latest",
+    "postcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "wait-on": "latest"
+  },
+  "build": {
+    "appId": "com.gatewayos.scada",
+    "productName": "GatewayOS",
+    "directories": { "output": "release" },
+    "files": ["dist/**/*", "electron/**/*", "package.json"],
+    "asarUnpack": ["node_modules/better-sqlite3/**/*", "node_modules/serialport/**/*"],
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }] },
+    "mac": { "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }], "category": "public.app-category.productivity" },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true }
+  }
+}

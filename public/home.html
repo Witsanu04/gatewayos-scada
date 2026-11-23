@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="th" class="dark scroll-smooth">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GatewayOS — Industrial Dashboard Designer &amp; PLC Tag Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            50: '#eefbf7',
+            100: '#d5f7ec',
+            400: '#fb923c',
+            500: '#f97316',
+            600: '#ea580c',
+            700: '#047857',
+            900: '#064e3b',
+          },
+          dark: {
+            bg: '#070a0f',
+            card: '#0f151e',
+            cardHover: '#161f2c',
+            border: 'rgba(255, 255, 255, 0.08)',
+            borderHighlight: 'rgba(249, 115, 22, 0.3)',
+          },
+          accent: {
+            blue: '#0ea5e9',
+            amber: '#f59e0b',
+            rose: '#ef4444',
+            purple: '#a855f7'
+          }
+        },
+        fontFamily: {
+          sans: ['"IBM Plex Sans Thai"', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace']
+        },
+        boxShadow: {
+          'orange-glow': '0 0 40px -10px rgba(249, 115, 22, 0.3)',
+          'blue-glow': '0 0 40px -10px rgba(14, 165, 233, 0.3)',
+          'card-glass': '0 20px 40px -15px rgba(0, 0, 0, 0.6)'
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    background-color: #070a0f;
+    color: #f8fafc;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    overflow-x: hidden;
+  }
+  .bg-grid-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .glass-panel {
+    background: rgba(15, 21, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-panel-glow {
+    background: linear-gradient(135deg, rgba(15, 21, 30, 0.85) 0%, rgba(22, 31, 44, 0.6) 100%);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(249, 115, 22, 0.25);
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #070a0f; }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #f97316; }
+</style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-slate-950">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3 transition-all duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-500 via-orange-400 to-accent-blue flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          G
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-lg tracking-tight text-white group-hover:text-brand-500 transition-colors">GatewayOS</span>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-brand-500/10 text-brand-500 border border-brand-500/30">Web Designer</span>
+          </div>
+          <span class="text-[11px] text-slate-400 font-medium hidden sm:block">Industrial Dashboard Designer &amp; PLC Tag Studio</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#workflow" class="hover:text-brand-500 transition-colors">ขั้นตอนการทำงาน</a>
+        <a href="#features" class="hover:text-brand-500 transition-colors">ฟีเจอร์ออกแบบ</a>
+        <a href="#protocols" class="hover:text-brand-500 transition-colors">การเชื่อมต่อข้อมูล</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="/" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-brand-500 hover:bg-brand-400 transition shadow-lg shadow-brand-500/25">
+          <span>เปิดใช้งาน Dashboard Designer</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-14 pb-20 md:pt-24 md:pb-28 overflow-hidden bg-grid-pattern">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/15 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-accent-blue/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 relative z-10">
+      <div class="flex justify-center mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border-brand-500/30 text-xs text-slate-300">
+          <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse"></span>
+          <span class="font-semibold text-brand-400">Web-Based Industrial Designer</span>
+          <span class="text-slate-500">•</span>
+          <span>ไม่ต้องติดตั้งโปรแกรม · รองรับ PLC Tag Mapping &amp; Export JSON แบบ Grafana</span>
+        </div>
+      </div>
+
+      <div class="text-center max-w-4xl mx-auto space-y-6">
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+          ออกแบบหน้าจอ Dashboard โรงงาน <br class="hidden sm:inline"/>
+          <span class="bg-gradient-to-r from-brand-400 via-orange-300 to-accent-blue bg-clip-text text-transparent">ผูก PLC Tag &amp; ฐานข้อมูลได้ในคลิกเดียว</span>
+        </h1>
+        <p class="text-base sm:text-xl text-slate-400 font-light leading-relaxed max-w-3xl mx-auto">
+          เครื่องมือออกแบบ Industrial Dashboard สไตล์ Grafana สำหรับวิศวกรระบบอัตโนมัติ สร้างตาราง PLC Tag Mapping (Ladder Address), วางโมเดลเครื่องจักร PNG, ตั้งค่า Threshold แจ้งเตือน และเชื่อมต่อ Google Sheets หรือ Database ได้จริงโดยไม่มีข้อมูลจำลอง
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <a href="/" class="px-8 py-4 rounded-2xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-extrabold text-sm sm:text-base flex items-center gap-3 shadow-xl shadow-brand-500/25 transition-all transform hover:-translate-y-0.5">
+            <span>🚀 เข้าสู่หน้าออกแบบ Dashboard (Studio)</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+          <a href="#workflow" class="px-7 py-4 rounded-2xl glass-panel hover:bg-slate-800 text-white font-bold text-sm sm:text-base border border-slate-700 flex items-center gap-2 transition transform hover:-translate-y-0.5">
+            <span>📖 ดูขั้นตอนการใช้งาน</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- WORKFLOW STEPS CARD -->
+      <div id="workflow" class="mt-16 max-w-5xl mx-auto glass-panel-glow rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-5 mb-6 border-b border-white/10">
+          <span class="text-xs font-mono uppercase tracking-wider text-brand-400 font-bold">End-to-End Engineering Workflow</span>
+          <a href="/" class="text-xs text-brand-400 hover:underline font-semibold">เปิดหน้า Dashboard Designer →</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <a href="/" class="block bg-slate-950/80 hover:bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-brand-500/50 transition group">
+            <div class="text-xs font-mono text-brand-400 mb-2">STEP 01 · PLC LADDER</div>
+            <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition">1. กำหนดตาราง PLC Tags</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+              สร้างชื่อตัวแปรให้ตรงกับโปรแกรม Ladder พร้อมระบุ Address จริง (<code class="text-amber-400">D100</code>, <code class="text-amber-400">%IW64</code>, <code class="text-amber-400">M0.0</code>) และชนิดข้อมูล (<code class="text-sky-400">BOOL / INT / REAL</code>)
+            </p>
+          </a>
+
+          <a href="/" class="block bg-slate-950/80 hover:bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-sky-500/50 transition group">
+            <div class="text-xs font-mono text-sky-400 mb-2">STEP 02 · DATA SOURCES</div>
+            <h3 class="text-lg font-bold text-white group-hover:text-sky-400 transition">2. เชื่อม Google Sheets / DB</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+              ดึงข้อมูลจริงจากลิงก์ Google Sheets (CSV), อัปโหลดไฟล์ตาราง <code class="text-sky-400">.CSV</code> หรือยิง Query เข้า PostgreSQL / MySQL / InfluxDB API
+            </p>
+          </a>
+
+          <a href="/" class="block bg-slate-950/80 hover:bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-orange-500/50 transition group">
+            <div class="text-xs font-mono text-orange-400 mb-2">STEP 03 · GRAFANA DESIGNER</div>
+            <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition">3. ออกแบบ &amp; Export JSON</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+              เพิ่มกล่อง Stat, Gauge, Time Series, รูปเครื่องจักร/Robot PNG ตั้งค่า Threshold แจ้งเตือน และส่งออกเป็นไฟล์ <code class="text-orange-400">.json</code>
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORTED DATA & PROTOCOLS STRIP -->
+  <section id="protocols" class="border-y border-white/10 bg-slate-950/80 py-8">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <p class="text-center text-xs font-mono font-semibold uppercase tracking-widest text-slate-400 mb-6">
+        รองรับโครงสร้างตัวแปรและแหล่งข้อมูลอุตสาหกรรม (PLC &amp; Database Integration)
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-85">
+        <div class="flex items-center gap-2 text-slate-300 font-mono text-sm font-bold"><span class="w-2.5 h-2.5 rounded-full bg-brand-500"></span> PLC Ladder Tag Mapping</div>
+        <div class="flex items-center gap-2 text-slate-300 font-mono text-sm font-bold"><span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span> Google Sheets (CSV)</div>
+        <div class="flex items-center gap-2 text-slate-300 font-mono text-sm font-bold"><span class="w-2.5 h-2.5 rounded-full bg-accent-blue"></span> PostgreSQL / MySQL</div>
+        <div class="flex items-center gap-2 text-slate-300 font-mono text-sm font-bold"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> InfluxDB Time-Series</div>
+        <div class="flex items-center gap-2 text-slate-300 font-mono text-sm font-bold"><span class="w-2.5 h-2.5 rounded-full bg-orange-400"></span> Grafana JSON Schema</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO GRID FEATURES -->
+  <section id="features" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-brand-400">Designer Capabilities</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white">เครื่องมือออกแบบ Dashboard สำหรับงานอุตสาหกรรม</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 glass-panel p-8 rounded-3xl border border-slate-800 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 text-2xl mb-6">🎛️</div>
+          <h3 class="text-2xl font-bold text-white mb-3">Panel Options &amp; Thresholds แบบ Grafana</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            ปรับแต่งกล่องข้อมูลได้ละเอียดทุกจุด ทั้งชื่อ Title, คำอธิบาย, หน่วยวัด, ทศนิยม, ขอบเขตค่าต่ำสุด-สูงสุด (Min/Max), เกณฑ์สีแจ้งเตือนอัตโนมัติ (Warning / Critical Threshold) และการขยายขนาดคอลัมน์ (Grid Span)
+          </p>
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-900 flex flex-wrap items-center justify-around gap-3 font-mono text-xs text-brand-400">
+            <span>✓ Stat &amp; Gauge Panels</span>
+            <span>✓ Time-Series Trend</span>
+            <span>✓ Auto Threshold Colors</span>
+          </div>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl border border-slate-800 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-accent-blue/10 border border-accent-blue/30 flex items-center justify-center text-accent-blue text-2xl mb-6">🦾</div>
+          <h3 class="text-xl font-bold text-white mb-3">โมเดลเครื่องจักร &amp; Robot (.PNG)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            นำเข้ารูปภาพเครื่องจักรหรือแขนกล Robot (.PNG) เข้ามาจัดวางคู่กับเกจวัด พร้อมผูกสถานะ RUNNING / STANDBY เข้ากับบิตของ PLC ได้ทันที
+          </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl border border-slate-800 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 text-2xl mb-6">🏷️</div>
+          <h3 class="text-xl font-bold text-white mb-3">PLC Tag &amp; Address Mapping</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            จัดการตารางตัวแปรจากโปรแกรม Ladder ทั้ง Register Address (<code class="text-amber-400">D100</code>, <code class="text-amber-400">%MW10</code>) และ Data Type (<code class="text-sky-400">BOOL / INT / REAL</code>) เพื่อนำไปเลือกผูกในกราฟ
+          </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl border border-slate-800 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6">🗄️</div>
+          <h3 class="text-xl font-bold text-white mb-3">เชื่อมตาราง &amp; ฐานข้อมูลจริง</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ดึงข้อมูลจริงจากลิงก์ Google Sheets (CSV), ไฟล์ <code class="text-amber-400">.CSV</code> หรือ REST API ของ PostgreSQL / MySQL / InfluxDB โดยไม่มีการใช้ข้อมูลจำลอง
+          </p>
+        </div>
+
+        <div class="glass-panel p-8 rounded-3xl border border-slate-800 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 text-2xl mb-6">📤</div>
+          <h3 class="text-xl font-bold text-white mb-3">Export &amp; Import Dashboard (.JSON)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            ส่งออกโครงสร้าง Dashboard พร้อมตาราง PLC Tags เป็นไฟล์ <code class="text-orange-400">.json</code> เพื่อนำไปใช้งานต่อ หรือนำเข้ากลับมาแก้ไขได้ตลอดเวลา
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA & FOOTER -->
+  <section class="py-16 border-t border-white/10 bg-slate-950/90">
+    <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white">พร้อมออกแบบหน้าจอ Dashboard ของคุณแล้วหรือยัง?</h2>
+      <p class="text-sm text-slate-400">เข้าสู่หน้า Dashboard Designer เพื่อเริ่มสร้างตาราง PLC Tags และจัดวางกราฟได้ทันที</p>
+      <div>
+        <a href="/" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-brand-500 hover:bg-brand-400 text-slate-950 font-extrabold text-sm sm:text-base shadow-xl shadow-brand-500/25 transition transform hover:-translate-y-0.5">
+          <span>เปิดใช้งาน Dashboard Designer</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/10 py-6 px-4 lg:px-8 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-6 h-6 rounded-md bg-brand-500 text-slate-950 font-black flex items-center justify-center">G</span>
+        <b class="text-slate-200">GatewayOS Dashboard Designer</b>
+        <span>— Industrial Visualization &amp; PLC Tag Studio</span>
+      </div>
+      <a href="/" class="text-brand-400 hover:underline font-semibold">ไปที่หน้า Dashboard Designer →</a>
+    </div>
+  </footer>
+</body>
+</html>
